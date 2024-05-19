@@ -1,3 +1,7 @@
+## Install oh-my-posh
+
+`curl -s https://ohmyposh.dev/install.sh | bash -s`
+`oh-my-posh init nu --config ~/zash.omp.json`
 
 ## Set GTK Theme
 
