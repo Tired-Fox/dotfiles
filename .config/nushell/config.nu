@@ -895,3 +895,4 @@ $env.PATH = (
 	| load-env
 )
 source ~/.oh-my-posh.nu
+source ~/.zoxide.nu
