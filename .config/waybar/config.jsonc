@@ -1,0 +1,88 @@
+{
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    /* "modules-right": ["tray",  "pulseaudio", "custom/power"], */
+    "modules-right": ["pulseaudio", "bluetooth", "pulseaudio#mic", "tray"],
+
+    "hyprland/workspaces": {
+	"format": "•",
+	"workspaces": {}
+    },
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "", 
+        "max-length": 50,
+        "on-click": "kitty -e 'nmtui'"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+		"on-click": "bash /home/dg/.local/bin/toggleRemote"
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+    "clock": {
+      "format": "{:%b %d, %I:%M}",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+      "calendar": {
+        "mode": "month",
+        "mode-mon-col": 3,
+        "weeks-pos": "right",
+        "on-scroll": 1,
+        "on-click-right": "mode",
+        "format": {
+          "today": "<span color='#cdd6f4'><b><u>{}</u></b></span>"
+        }
+      }
+    },
+    "pulseaudio": {
+        "format": "{icon} ",
+	"tooltip-format": "{volume}% {icon} | {desc}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": "0% {icon} ",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "pulseaudio#mic": {
+        "format": "{format_source}",
+        "format-source": " ",
+        "format-source-muted": " ",
+        "tooltip-format": "{volume}% {format_source} ",
+        "on-click": "pactl set-source-mute 0 toggle",
+        "on-scroll-down": "pactl set-source-volume 0 -1%",
+        "on-scroll-up": "pactl set-source-volume 0 +1%"
+    },
+    "custom/power": {
+	"format": " ",
+	"on-click": "swaynag -t warning -m 'Power Menu Options' -b 'Logout' 'swaymsg exit' -b 'Restart' 'shutdown -r now' -b 'Shutdown'  'shutdown -h now' --background=#005566 --button-background=#009999 --button-border=#002b33 --border-bottom=#002b33"
+    },
+    "bluetooth": {
+	"format": "{icon}",
+        "format-on": "",
+        "format-off": "󰂲",
+        "format-disabled": "",
+        "format-connected": "<b></b>",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "rofi-bluetooth -config ~/.config/rofi/menu.d/network.rasi -i"
+  }
+}

@@ -1,0 +1,20 @@
+mv .config/nushell/ dotfiles/.config/
+cd dotfiles/
+stow .
+stow . --adopt
+clear
+mv ~/.config/swaync/ .config/
+stow .
+mv ~/.config/waybar/ .config/
+stow .
+mv ~/.config/kitty/ .config/
+stow .
+mv ~/.config/gtk-2.0/ .config/
+mv ~/.config/gtk-3.0/ .config/
+mv ~/.config/gtk-4.0/ .config/
+stow .
+clear
+git init
+gti add .
+clear
+git status
