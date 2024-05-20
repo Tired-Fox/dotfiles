@@ -872,7 +872,7 @@ $env.config = {
             mode: emacs
             event: {
               send: executehostcommand,
-              cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf --height 40% --reverse | decode utf-8 | str trim)"
+              cmd: "cd (ls -a | where type == dir | each { |it| $it.name} | str join (char nl) | fzf --height 50% --reverse --border | decode utf-8 | str trim)"
             }
         }
         {
@@ -882,7 +882,7 @@ $env.config = {
           mode: emacs
           event: {
             send: executehostcommand
-            cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join (char nl) | fzf --layout=reverse --height=40% -q (commandline) | decode utf-8 | str trim)"
+            cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join (char nl) | fzf --reverse --height=50% --border -q (commandline) | decode utf-8 | str trim)"
           }
         }
     ]
