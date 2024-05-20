@@ -850,19 +850,40 @@ $env.config = {
             event: { edit: cutselection }
             # event: { edit: cutselectionsystem }
         }
-        # {
-        #     name: paste_system
-        #     modifier: control_shift
-        #     keycode: char_v
-        #     mode: emacs
-        #     event: { edit: pastesystem }
-        # }
+        {
+            name: paste_system
+            modifier: control_shift
+            keycode: char_v
+            mode: emacs
+            event: { edit: pastesystem }
+        }
         {
             name: select_all
             modifier: control_shift
             keycode: char_a
             mode: emacs
             event: { edit: selectall }
+        }
+        # FZF Integration
+        {
+            name: change_dir_with_fzf
+            modifier: CONTROL
+            keycode: char_f
+            mode: emacs
+            event: {
+              send: executehostcommand,
+              cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf --height 40% --reverse | decode utf-8 | str trim)"
+            }
+        }
+        {
+          name: fuzzy_history
+          modifier: CONTROL
+          keycode: char_r
+          mode: emacs
+          event: {
+            send: executehostcommand
+            cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join (char nl) | fzf --layout=reverse --height=40% -q (commandline) | decode utf-8 | str trim)"
+          }
         }
     ]
 }
