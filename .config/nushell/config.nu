@@ -235,7 +235,7 @@ $env.config = {
     buffer_editor: "" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
     use_ansi_coloring: true
     bracketed_paste: true # enable bracketed paste, currently useless on windows
-    edit_mode: emacs # emacs, vi
+    edit_mode: "emacs" # emacs, vi
     shell_integration: false # enables terminal shell integration. Off by default, as some terminals have issues with this.
     render_right_prompt_on_last_line: false # true or false to enable or disable right prompt to be rendered on last line of the prompt.
     use_kitty_protocol: false # enables keyboard enhancement protocol implemented by kitty console, only if your terminal support this.
@@ -888,7 +888,7 @@ $env.config = {
     ]
 }
 
-$env.EDITOR = nvim
+$env.EDITOR = "nvim"
 $env.ZVM_INSTALL = $"($nu.home-path)/.zvm/self"
 
 $env.PATH = (
@@ -900,20 +900,16 @@ $env.PATH = (
 	| append $"($nu.home-path)/.cargo/bin"
 )
 
-$env.PATH = (
-	$env.PATH | split row (char esep)
-	| append (
-		fnm env --shell bash | lines | first
-		| str replace 'export PATH=' '' | str replace ':$PATH' '' | str replace -a '"' ''
-	)
-)
+# File: config.nu
+use std "path add"
+if not (which fnm | is-empty) {
+  ^fnm env --json | from json | load-env
+  let node_path = match $nu.os-info.name {
+    "windows" => $"($env.FNM_MULTISHELL_PATH)",
+    _ => $"($env.FNM_MULTISHELL_PATH)/bin",
+  }
+  path add $node_path
+}
 
-(
-	fnm env --shell bash
-	| lines | each {|i| $i | str replace 'export ' '' | str replace -a '"' ''}
-	| split column = | rename name value | where name != PATH
-	| reduce -f {} {|it, acc| $acc | upsert $it.name $it.value }
-	| load-env
-)
 source ~/.oh-my-posh.nu
 source ~/.zoxide.nu
