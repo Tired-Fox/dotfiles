@@ -9,7 +9,7 @@ config.font = wezterm.font_with_fallback({
 })
 
 config.show_new_tab_button_in_tab_bar = false
-config.enable_tab_bar = true
+config.enable_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 
 local padding = 2
